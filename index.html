@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Game Edukasi TKA SMPN 1 Segah - Literasi & Numerasi</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top Header Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="school-brand">
+        <div class="school-logo-badge">🏫</div>
+        <div class="school-info">
+          <h1>SMP Negeri 1 Segah</h1>
+          <p>Asesmen TKA • Literasi & Numerasi</p>
+        </div>
+      </div>
+      <div class="header-controls">
+        <div class="user-pill" id="header-user-pill">
+          <span id="header-avatar-icon">👨‍🎓</span>
+          <div>
+            <strong id="header-student-name">Siswa Segah</strong>
+            <span id="header-student-class" style="display: block; font-size: 0.72rem; opacity: 0.8;">Kelas VIII-A</span>
+          </div>
+          <button id="btn-change-profile" class="btn btn-icon" title="Ubah Profil">✏️</button>
+        </div>
+        <button id="btn-leaderboard" class="btn btn-secondary">🏆 Rekap & Papan Skor</button>
+        <button id="btn-admin-login" class="btn btn-secondary" style="background: rgba(245, 158, 11, 0.2); border-color: #f59e0b; color: #fbbf24;">🔑 Menu Admin</button>
+        <button id="btn-sound-toggle" class="btn btn-secondary">🔊 Sound On</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-wrapper">
+
+    <!-- VIEW 1: Profile Setup -->
+    <section id="view-profile" class="view-card profile-card glass-card">
+      <div class="profile-header">
+        <h2>Selamat Datang Pejuang TKA!</h2>
+        <p>Silakan lengkapi identitas siswa dan kata sandi/password untuk mulai petualangan belajar di SMP Negeri 1 Segah.</p>
+      </div>
+      <form id="profile-form">
+        <div class="form-group">
+          <label for="student-name-input">Nama Lengkap Siswa</label>
+          <input type="text" id="student-name-input" class="form-control" placeholder="Contoh: Siswa" required>
+        </div>
+
+        <div class="form-group">
+          <label for="student-class-select">Kelas</label>
+          <select id="student-class-select" class="form-control">
+            <option value="IX-A" selected>Kelas IX-A</option>
+            <option value="IX-B">Kelas IX-B</option>
+            <option value="IX-C">Kelas IX-C</option>
+            <option value="IX-D">Kelas IX-D</option>
+            <option value="IX-E">Kelas IX-E</option>
+            <option value="IX-F">Kelas IX-F</option>
+            <option value="IX-G">Kelas IX-G</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="student-password-input">
+            Password Peserta <span id="pwd-required-badge" class="badge-status-on">🔒 Wajib</span>
+          </label>
+          <input type="password" id="student-password-input" class="form-control" placeholder="Masukkan password peserta Anda" required>
+          <small id="pwd-help-text" style="color: #64748b; font-size: 0.78rem; display: block; margin-top: 4px;">
+            Hubungi Guru/Admin jika Anda belum memiliki password peserta.
+          </small>
+        </div>
+
+        <div class="form-group">
+          <label>Pilih Avatar Karakter</label>
+          <div class="avatar-grid">
+            <div class="avatar-option selected" data-avatar="avatar1">
+              <span class="avatar-icon">👨‍🎓</span>
+              <span class="avatar-name">Andi</span>
+            </div>
+            <div class="avatar-option" data-avatar="avatar2">
+              <span class="avatar-icon">👩‍🎓</span>
+              <span class="avatar-name">Siti</span>
+            </div>
+            <div class="avatar-option" data-avatar="avatar3">
+              <span class="avatar-icon">🧑‍🌾</span>
+              <span class="avatar-name">Budi</span>
+            </div>
+            <div class="avatar-option" data-avatar="avatar4">
+              <span class="avatar-icon">👧</span>
+              <span class="avatar-name">Dewi</span>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 12px;">🚀 Masuk ke Arena Game TKA</button>
+      </form>
+    </section>
+
+    <!-- VIEW 2: Lobby / Package Selection -->
+    <section id="view-lobby" class="view-card hidden">
+      <div class="welcome-banner">
+        <div class="welcome-text">
+          <h2>Paket Asesmen TKA SMPN 1 Segah</h2>
+          <p>Asah ketajaman literasi baca dan numerasi matematis Anda melalui 4 paket soal terstandar.</p>
+        </div>
+        <div>
+          <span style="font-size: 3rem;">📚</span>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 20px;">
+        <div class="mode-selector-wrapper">
+          <button id="mode-game-btn" class="mode-btn active">⚡ Mode Petualangan (Game)</button>
+          <button id="mode-exam-btn" class="mode-btn">⏱️ Mode Simulasi Ujian (TKA)</button>
+        </div>
+        <p id="mode-description" class="mode-description">⚡ Mode Petualangan: Skor combo streak, efek suara interaktif, dan bantuan power-up (50:50 / Hint).</p>
+      </div>
+
+      <!-- 4 Question Packages Grid -->
+      <div id="package-container" class="package-grid">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- VIEW 3: Quiz Arena -->
+    <section id="view-quiz" class="view-card hidden">
+      <div class="quiz-topbar">
+        <div class="quiz-top-info">
+          <h3 id="quiz-package-title">Paket 1: Literasi</h3>
+          <span id="quiz-progress-text" style="font-size: 0.85rem; color: var(--color-text-muted);">Soal 1 dari 6</span>
+        </div>
+        <div class="quiz-top-stats">
+          <span id="combo-container" class="stat-pill" style="background: #fef3c7; color: #92400e;">🔥 Combo: <strong id="combo-count">0x</strong></span>
+          <span id="quiz-score-display" class="stat-pill" style="background: #dbeafe; color: #1e40af;">⭐ Poin: 0</span>
+          <span id="quiz-timer-display" class="stat-pill" style="background: #fee2e2; color: #991b1b;">⏱️ Waktu: 00:00</span>
+        </div>
+      </div>
+
+      <div class="progress-bar-wrapper">
+        <div id="quiz-progress-bar" class="progress-bar-fill"></div>
+      </div>
+
+      <div class="quiz-body-grid">
+        <!-- Left Area: Question & Stimulus -->
+        <div class="glass-card">
+          <div id="stimulus-container"></div>
+
+          <div class="question-card-header">
+            <span id="question-badge" class="badge badge-literasi">Literasi • Dasar</span>
+          </div>
+
+          <h3 id="question-text" class="question-text">Pertanyaan akan muncul di sini...</h3>
+
+          <div class="powerups-bar">
+            <button id="btn-power-5050" class="btn-power">✂️ Bantuan 50:50 (-5 Poin)</button>
+            <button id="btn-power-hint" class="btn-power">💡 Petunjuk / Hint (-3 Poin)</button>
+            <button id="btn-flag-question" class="btn-power btn-flag">🚩 Ragu-ragu</button>
+          </div>
+
+          <div id="hint-box" class="hint-box hidden">
+            <span id="hint-text"></span>
+          </div>
+
+          <!-- Options Container -->
+          <div id="options-container" class="options-container"></div>
+
+          <div class="quiz-actions">
+            <button id="btn-prev-question" class="btn btn-secondary">⬅️ Sebelumnya</button>
+            <button id="btn-next-question" class="btn btn-primary">Selanjutnya ➡️</button>
+            <button id="btn-submit-quiz" class="btn btn-success" style="display: none;">✅ Kumpulkan Paket</button>
+          </div>
+        </div>
+
+        <!-- Right Area: Question Navigation Grid -->
+        <div class="quiz-sidebar glass-card">
+          <h4 class="sidebar-title">Navigasi Soal</h4>
+          <div id="question-grid-nav" class="question-grid-nav"></div>
+          <div style="font-size: 0.78rem; color: #64748b; margin-top: 16px; line-height: 1.6;">
+            <div><span style="display:inline-block; width:12px; height:12px; background:#dbeafe; border-radius:3px;"></span> Dijawab</div>
+            <div><span style="display:inline-block; width:12px; height:12px; background:#fee2e2; border-radius:3px;"></span> Ragu-ragu</div>
+            <div><span style="display:inline-block; width:12px; height:12px; background:#ffffff; border:1px solid #cbd5e1; border-radius:3px;"></span> Belum Dijawab</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VIEW 4: Result Screen -->
+    <section id="view-result" class="view-card result-card glass-card hidden">
+      <h2 style="color: var(--color-primary);">Hasil Evaluasi TKA SMPN 1 Segah</h2>
+      <p style="color: var(--color-text-muted); margin-top: 4px;">Selamat kepada <strong id="result-student-name">Siswa</strong> atas penyelesaian tes ini!</p>
+
+      <div class="score-display-box">
+        <div id="result-score-percent" class="score-number">0%</div>
+        <div id="result-score-grade" class="score-grade">Sangat Memuaskan</div>
+        <div id="result-badge" class="badge badge-numerasi" style="margin-top: 10px; display: inline-block;">JUARA LITERASI</div>
+      </div>
+
+      <div class="result-stats-grid">
+        <div class="res-stat-card">
+          <span>Jawaban Benar</span>
+          <strong id="result-correct-count">0/6</strong>
+        </div>
+        <div class="res-stat-card">
+          <span>Waktu Pengerjaan</span>
+          <strong id="result-time-spent">0m 0s</strong>
+        </div>
+        <div class="res-stat-card">
+          <span>Poin Perolehan</span>
+          <strong id="result-points">0 Poin</strong>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button id="btn-review-answers" class="btn btn-primary">📖 Lihat Pembahasan Soal</button>
+        <button id="btn-print-certificate" class="btn btn-success">📜 Cetak Sertifikat Hasil</button>
+        <button id="btn-back-to-lobby" class="btn btn-secondary">🏠 Kembali ke Beranda</button>
+      </div>
+    </section>
+
+    <!-- VIEW 5: Review Answers -->
+    <section id="view-review" class="view-card hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 id="review-package-title" style="color: white;">Pembahasan Soal Lengkap</h2>
+        <button id="btn-review-back-result" class="btn btn-secondary">⬅️ Kembali ke Hasil</button>
+      </div>
+
+      <div id="review-list-container">
+        <!-- Rendered dynamically by app.js -->
+      </div>
+    </section>
+
+    <!-- VIEW 6: Leaderboard & Rekap Data -->
+    <section id="view-leaderboard" class="view-card glass-card hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <div>
+          <h2 style="color: var(--color-primary);">🏆 Rekap Ujian & Papan Skor TKA</h2>
+          <p style="font-size: 0.85rem; color: #64748b;">Riwayat perolehan nilai siswa SMP Negeri 1 Segah di perangkat ini.</p>
+        </div>
+        <button id="btn-leaderboard-back-lobby" class="btn btn-secondary">🏠 Kembali ke Beranda</button>
+      </div>
+
+      <div class="table-responsive">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama Siswa</th>
+              <th>Kelas</th>
+              <th>Paket Soal</th>
+              <th>Nilai (%)</th>
+              <th>Poin</th>
+              <th>Tanggal</th>
+            </tr>
+          </thead>
+          <tbody id="history-table-body">
+            <!-- Dynamic history rows -->
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 16px; flex-wrap: wrap;">
+        <button id="btn-export-excel-history" class="btn btn-success">📊 Export Rekap ke Excel (CSV)</button>
+        <button id="btn-export-data" class="btn btn-outline">📥 Export Rekap (JSON)</button>
+        <button id="btn-clear-data" class="btn btn-secondary" style="color: #ef4444;">🗑️ Hapus Riwayat</button>
+      </div>
+    </section>
+
+    <!-- VIEW 7: Admin Panel View -->
+    <section id="view-admin-panel" class="view-card glass-card hidden">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #e2e8f0; padding-bottom: 16px;">
+        <div>
+          <h2 style="color: var(--color-primary);">⚙️ Panel Admin & Guru SMPN 1 Segah</h2>
+          <p style="font-size: 0.85rem; color: #64748b;">Kelola akun peserta, setel password ujian, dan atur proteksi akses tes.</p>
+        </div>
+        <button id="btn-admin-close" class="btn btn-secondary">🏠 Ke Beranda Utama</button>
+      </div>
+
+      <!-- Global Settings Box -->
+      <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+        <h3 style="font-size: 1.05rem; color: var(--color-primary); margin-bottom: 12px;">🔒 Pengaturan Keamanan & Mode Ujian</h3>
+        
+        <div style="display: flex; gap: 24px; align-items: center; flex-wrap: wrap;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <input type="checkbox" id="toggle-require-password" style="width: 20px; height: 20px; cursor: pointer;">
+            <label for="toggle-require-password" style="font-weight: 600; cursor: pointer;">
+              Wajibkan Password Peserta untuk Akses Ujian
+            </label>
+          </div>
+
+          <div style="display: flex; align-items: center; gap: 10px; border-left: 1px solid #cbd5e1; padding-left: 20px;">
+            <label style="font-weight: 600; font-size: 0.9rem;">Ubah Password Master Admin:</label>
+            <input type="password" id="input-new-master-password" class="form-control" style="width: 160px; padding: 6px 12px;" placeholder="Password Baru">
+            <button id="btn-update-master-pwd" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.82rem;">Simpan</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add New Participant Account Form -->
+      <div style="background: #eff6ff; border: 1px solid #bfdbfe; border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+        <h3 style="font-size: 1rem; color: #1e40af; margin-bottom: 12px;">➕ Tambah / Mendaftarkan Akun Peserta Baru</h3>
+        <form id="form-add-participant" style="display: grid; grid-template-columns: 2fr 1fr 1.5fr 1fr; gap: 12px; align-items: end;">
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 600;">Nama Lengkap Siswa</label>
+            <input type="text" id="add-part-name" class="form-control" placeholder="Contoh: Siswa" required>
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 600;">Kelas</label>
+            <select id="add-part-class" class="form-control">
+              <option value="IX-A" selected>IX-A</option>
+              <option value="IX-B">IX-B</option>
+              <option value="IX-C">IX-C</option>
+              <option value="IX-D">IX-D</option>
+              <option value="IX-E">IX-E</option>
+              <option value="IX-F">IX-F</option>
+              <option value="IX-G">IX-G</option>
+            </select>
+          </div>
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 600;">Password Peserta</label>
+            <input type="text" id="add-part-password" class="form-control" placeholder="Password (misal: 12345)" required>
+          </div>
+          <div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">+ Tambah Akun</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Import Data Siswa via Excel / CSV -->
+      <div style="background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: var(--radius-md); padding: 18px; margin-bottom: 24px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+          <div>
+            <h3 style="font-size: 1rem; color: #166534; margin-bottom: 4px;">📊 Import Data Siswa dari Excel / CSV</h3>
+            <p style="font-size: 0.82rem; color: #15803d;">
+              Unduh template Excel (CSV), isi daftar nama & password siswa Kelas IX (IX-A s/d IX-G), lalu unggah file ke sistem.
+            </p>
+          </div>
+          <div style="display: flex; gap: 10px; align-items: center;">
+            <button id="btn-download-template" class="btn btn-outline" style="border-color: #166534; color: #166534;">
+              📥 Unduh Template Excel (CSV)
+            </button>
+            <input type="file" id="input-import-file" accept=".csv, .txt, .xlsx, .xls" class="hidden">
+            <button id="btn-trigger-import" class="btn btn-success">
+              📤 Import File Excel/CSV
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Participant Passwords Table -->
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 style="font-size: 1.1rem; color: var(--color-primary);">📋 Daftar Password & Akun Peserta Terdaftar</h3>
+        <div>
+          <button id="btn-generate-default-passwords" class="btn btn-outline" style="font-size: 0.82rem;">⚡ Buat Password Masal Kelas</button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nama Siswa</th>
+              <th>Kelas</th>
+              <th>Password Peserta Saat Ini</th>
+              <th>Status Password</th>
+              <th>Aksi Pengaturan</th>
+            </tr>
+          </thead>
+          <tbody id="admin-participant-table-body">
+            <!-- Rendered dynamically by app.js -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL: Admin Password Authentication -->
+  <div id="modal-admin-auth" class="modal-overlay hidden">
+    <div class="modal-content glass-card">
+      <h3 style="color: var(--color-primary); margin-bottom: 8px;">🔐 Autentikasi Admin / Guru</h3>
+      <p style="font-size: 0.88rem; color: #64748b; margin-bottom: 16px;">Masukkan Password Master Admin untuk mengakses Menu Pengaturan Password Peserta.</p>
+      
+      <form id="form-admin-login">
+        <div class="form-group">
+          <label for="admin-password-input">Password Master Admin</label>
+          <input type="password" id="admin-password-input" class="form-control" placeholder="Masukkan password admin" required autofocus>
+          <small style="color: #64748b; font-size: 0.78rem; display: block; margin-top: 4px;">Default Password: <strong>admin123</strong></small>
+        </div>
+
+        <div style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" id="btn-admin-cancel" class="btn btn-secondary">Batal</button>
+          <button type="submit" class="btn btn-primary">Masuk Admin Panel</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Printable Official Certificate HTML View (Hidden in Screen, Visible on Print) -->
+  <div class="printable-certificate">
+    <div class="cert-header">
+      <h1>SMP NEGERI 1 SEGAH</h1>
+      <p>KABUPATEN BERAU - KALIMANTAN TIMUR</p>
+      <p style="font-size: 10pt; font-style: italic;">Jalan Utama Segah, Kecamatan Segah, Kabupaten Berau</p>
+    </div>
+
+    <div class="cert-body">
+      <h2 style="letter-spacing: 2px; color: #1e3a8a;">KARTU HASIL ASESMEN TKA</h2>
+      <p>Diberikan kepada siswa:</p>
+      
+      <div id="cert-student-name" class="cert-student-name">NAMA SISWA</div>
+      <p id="cert-student-class" style="font-weight: bold; font-size: 13pt;">Kelas VIII-A</p>
+
+      <p style="margin-top: 20px;">Telah menyelesaikan Evaluasi Kemampuan Akademik pada:</p>
+      <h3 id="cert-package-title" style="color: #059669; margin: 10px 0;">Paket 1: Literasi & Numerasi SMP</h3>
+
+      <div class="cert-score-box">
+        SKOR AKHIR: <span id="cert-score">100%</span>
+      </div>
+      <p id="cert-badge-text" style="font-size: 12pt; font-weight: bold; color: #1e3a8a;">PREDIKAT: SANGAT MEMUASKAN</p>
+    </div>
+
+    <div class="cert-footer">
+      <div class="cert-sign-box">
+        <p>Tanggal: <span id="cert-date">10 September 2026</span></p>
+        <p style="margin-top: 60px; font-weight: bold; text-decoration: underline;">Siswa Peserta</p>
+      </div>
+      <div class="cert-sign-box">
+        <p>Segah, Berau</p>
+        <p style="margin-top: 60px; font-weight: bold; text-decoration: underline;">Kepala SMPN 1 Segah</p>
+        <p style="font-size: 9pt;">NIP. 19780512 200501 1 004</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data/questions.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/confetti.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
